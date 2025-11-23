@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Multi jQuery Widgets</title>
+    <script src="https://code.jquery.com/jquery-1.12.4.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+    <style>
+      body {
+        font-family: Arial;
+        padding: 20px;
+      }
+      #carousel img {
+        width: 200px;
+        display: none;
+      }
+      .active-widget {
+        border: 2px solid red;
+        padding: 5px;
+      }
+      #modal {
+        display: none;
+        position: fixed;
+        left: 50%;
+        top: 50%;
+        transform: translate(-50%, -50%);
+        background: white;
+        padding: 20px;
+        border: 2px solid #333;
+      }
+      .widget {
+        padding: 10px;
+        margin: 10px 0;
+        background: #eee;
+        cursor: pointer;
+      }
+    </style>
+  </head>
+  <body>
+    <h2>Multi-jQuery Widgets</h2>
+    <div id="carousel">
+      <img
+        src="https://via.placeholder.com/200?text=Slide+1"
+        class="slide"
+        style="display: block"
+      />
+      <img src="https://via.placeholder.com/200?text=Slide+2" class="slide" />
+      <img src="https://via.placeholder.com/200?text=Slide+3" class="slide" />
+    </div>
+    <div class="widget">Widget A</div>
+    <div class="widget">Widget B</div>
+    <div class="widget">Widget C</div>
+    <button id="notifyBtn">Show Notification</button>
+
+    <div id="modal">
+      <p>This is a notification popup!</p>
+      <button id="closeModal">Close</button>
+    </div>
+
+    <br /><br />
+
+    <span id="info" title="This is a tooltip message!">Hover for Tooltip</span>
+
+    <script>
+      var jq1 = jQuery.noConflict(true);
+      var $j = jQuery.noConflict(true);
+      jq1(function () {
+        let index = 0;
+        setInterval(function () {
+          let slides = jq1(".slide");
+          slides.hide();
+          index = (index + 1) % slides.length;
+          slides.eq(index).show();
+        }, 2000);
+      });
+      jq1(".widget").click(function () {
+        jq1(".widget").removeClass("active-widget");
+        jq1(this).addClass("active-widget");
+      });
+      $j("#notifyBtn").click(function () {
+        $j("#modal").fadeIn();
+      });
+
+      $j("#closeModal").click(function () {
+        $j("#modal").fadeOut();
+      });
+      $j("#info").hover(
+        function () {
+          let title = $j(this).attr("title");
+          $j("<div id='tooltipBox'>")
+            .text(title)
+            .css({
+              position: "absolute",
+              background: "#000",
+              color: "#fff",
+              padding: "5px",
+              top: event.pageY + 10,
+              left: event.pageX + 10,
+            })
+            .appendTo("body");
+        },
+        function () {
+          $j("#tooltipBox").remove();
+        }
+      );
+    </script>
+  </body>
+</html>
