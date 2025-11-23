@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Event Subscription Panel</title>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+    <style>
+      body {
+        font-family: Arial;
+        padding: 20px;
+      }
+      .topic {
+        padding: 8px;
+        margin: 5px 0;
+        background: #eee;
+        cursor: pointer;
+        border-radius: 5px;
+      }
+      .subscribed {
+        background: #c8ffd4 !important;
+      }
+      #message {
+        margin-top: 10px;
+        font-weight: bold;
+        color: green;
+      }
+    </style>
+  </head>
+
+  <body>
+    <h2>Subscription Panel</h2>
+
+    <div id="topics">
+      <div class="topic">Sports</div>
+      <div class="topic">Technology</div>
+      <div class="topic">Music</div>
+    </div>
+
+    <br />
+
+    <input type="text" id="newTopic" placeholder="Add new topic" />
+    <button id="addBtn">Add Topic</button>
+    <button id="removeBtn">Remove 'Music' subscription</button>
+
+    <div id="message"></div>
+
+    <script>
+      function showMessage(text) {
+        $("#message").text(text).fadeIn().delay(1500).fadeOut();
+      }
+      $("#topics").on("click", ".topic", function () {
+        $(this).toggleClass("subscribed");
+
+        if ($(this).hasClass("subscribed")) {
+          showMessage("Subscribed to " + $(this).text());
+        } else {
+          showMessage("Unsubscribed from " + $(this).text());
+        }
+      });
+      $("#addBtn").click(function () {
+        let val = $("#newTopic").val().trim();
+        if (val === "") return;
+
+        $("#topics").append(`<div class='topic'>${val}</div>`);
+        showMessage("New topic added: " + val);
+        $("#newTopic").val("");
+      });
+      $("#removeBtn").click(function () {
+        let topic = $("#topics .topic:contains('Music')");
+
+        topic.off("click");
+        topic.css("background", "#ffb3b3");
+        showMessage("Removed subscription event from 'Music'");
+      });
+    </script>
+  </body>
+</html>
