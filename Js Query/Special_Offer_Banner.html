@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Special Offer Banner</title>
+
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+<style>
+    body {
+        font-family: Arial, sans-serif;
+        padding: 20px;
+    }
+    .banner {
+        padding: 20px;
+        color: white;
+        margin-bottom: 15px;
+        border-radius: 8px;
+        display: none;
+    }
+    #banner1 { background: #d9534f; }
+    #banner2 { background: #5bc0de; }
+    #banner3 { background: #5cb85c; }
+    .controls button {
+        margin-right: 10px;
+        padding: 8px 14px;
+    }
+</style>
+</head>
+
+<body>
+
+<h2>Special Offer Banners</h2>
+<div id="banner1" class="banner">🔥 50% OFF on Electronics!</div>
+<div id="banner2" class="banner">🎁 Buy 1 Get 1 Free on Clothing!</div>
+<div id="banner3" class="banner">🚀 Free Delivery on Orders Above ₹499!</div>
+<div class="controls">
+    <button id="hideBtn">Hide</button>
+    <button id="showBtn">Show</button>
+    <button id="slideBtn">Slide Up/Down</button>
+    <button id="fadeBtn">Fade In/Out</button>
+</div>
+
+<script>
+    let banners = $(".banner");
+    let current = 0;
+    $(banners[0]).fadeIn();
+    $("#hideBtn").click(() => {
+        banners.hide();
+    });
+    $("#showBtn").click(() => {
+        banners.show();
+    });
+    $("#slideBtn").click(() => {
+        banners.slideToggle();
+    });
+    $("#fadeBtn").click(() => {
+        banners.fadeToggle();
+    });
+    setInterval(() => {
+        $(banners[current]).fadeOut(500);
+
+        current = (current + 1) % banners.length;
+
+        $(banners[current]).fadeIn(500);
+
+    }, 5000);
+</script>
+
+</body>
+</html>
