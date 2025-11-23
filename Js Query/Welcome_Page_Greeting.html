@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Welcome Page Greeting</title>
+    <style>
+      body {
+        font-family: Arial;
+        padding: 20px;
+      }
+      #greeting {
+        font-size: 24px;
+        cursor: pointer;
+      }
+      #welcomeMsg {
+        margin-top: 10px;
+        font-size: 18px;
+      }
+    </style>
+  </head>
+  <body>
+    <h1 id="greeting"></h1>
+    <p id="welcomeMsg">We are glad to have you here!</p>
+
+    <button id="changeBtn">Change Greeting</button>
+    <button id="toggleBtn">Toggle Welcome Message</button>
+
+    <script>
+      window.onload = function () {
+        const h = new Date().getHours();
+        let text = "";
+
+        if (h < 12) text = "Good Morning!";
+        else if (h < 17) text = "Good Afternoon!";
+        else text = "Good Evening!";
+
+        document.getElementById("greeting").textContent = text;
+      };
+      document.getElementById("changeBtn").onclick = function () {
+        const quotes = [
+          "Believe in yourself!",
+          "Keep pushing forward!",
+          "Success starts with effort!",
+          "Every day is a new chance!",
+        ];
+        const random = Math.floor(Math.random() * quotes.length);
+        document.getElementById("greeting").textContent = quotes[random];
+      };
+      document.getElementById("toggleBtn").onclick = function () {
+        const msg = document.getElementById("welcomeMsg");
+        msg.style.display = msg.style.display === "none" ? "block" : "none";
+      };
+      document.getElementById("greeting").onclick = function () {
+        alert("You clicked the greeting!");
+      };
+    </script>
+  </body>
+</html>
