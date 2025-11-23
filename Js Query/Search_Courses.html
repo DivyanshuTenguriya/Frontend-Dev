@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Search Courses</title>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+    <style>
+      body {
+        font-family: Arial;
+        padding: 20px;
+      }
+      .course {
+        padding: 10px;
+        margin: 5px 0;
+        background: #f5f5f5;
+        border-radius: 6px;
+      }
+      .highlight {
+        background: yellow;
+      }
+      #count {
+        margin-top: 10px;
+        font-weight: bold;
+      }
+      #clearBtn {
+        margin-left: 10px;
+      }
+    </style>
+  </head>
+  <body>
+    <h2>Search Courses</h2>
+
+    <input type="text" id="searchBox" placeholder="Search courses..." />
+    <button id="clearBtn">Clear</button>
+
+    <div id="courses">
+      <div class="course">JavaScript Basics</div>
+      <div class="course">Advanced CSS</div>
+      <div class="course">React for Beginners</div>
+      <div class="course">Data Structures in Python</div>
+      <div class="course">Machine Learning Essentials</div>
+      <div class="course">Backend with Node.js</div>
+    </div>
+
+    <div id="count"></div>
+
+    <script>
+      function highlightText(element, keyword) {
+        let text = element.text();
+        let regex = new RegExp(keyword, "gi");
+        let newText = text.replace(
+          regex,
+          (match) => `<span class="highlight">${match}</span>`
+        );
+        element.html(newText);
+      }
+      $("#searchBox").keyup(function () {
+        let keyword = $(this).val().toLowerCase();
+        let matchCount = 0;
+
+        $(".course").each(function () {
+          let courseText = $(this).text().toLowerCase();
+          $(this).html($(this).text());
+
+          if (courseText.includes(keyword) && keyword !== "") {
+            $(this).show();
+            highlightText($(this), keyword);
+            matchCount++;
+          } else if (keyword === "") {
+            $(this).show();
+          } else {
+            $(this).hide();
+          }
+        });
+        $("#count").text(
+          keyword === "" ? "" : `Matched Courses: ${matchCount}`
+        );
+      });
+      $("#clearBtn").click(function () {
+        $("#searchBox").val("");
+        $(".course").each(function () {
+          $(this).html($(this).text()).show();
+        });
+        $("#count").text("");
+      });
+    </script>
+  </body>
+</html>
