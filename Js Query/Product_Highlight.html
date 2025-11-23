@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Product Highlight</title>
+    <style>
+        body { font-family: Arial; padding: 20px; }
+        .product {
+            width: 200px;
+            padding: 15px;
+            border: 1px solid #ccc;
+            margin: 10px;
+            border-radius: 8px;
+            position: relative;
+            cursor: pointer;
+        }
+        .product:hover {
+            border-color: #555;
+        }
+        .highlight {
+            background: #ffffcc;
+        }
+        .details {
+            display: none;
+            font-size: 14px;
+            color: #444;
+            margin-top: 8px;
+        }
+        .favorite {
+            font-size: 20px;
+            position: absolute;
+            top: 8px;
+            right: 8px;
+            cursor: pointer;
+        }
+        .favorite.selected {
+            color: red;
+        }
+        .product[data-discount="true"] {
+            border: 2px solid green;
+            background: #eaffea;
+        }
+    </style>
+</head>
+<body>
+
+<h2>Products</h2>
+
+<div class="product" data-stock="in" data-discount="true">
+    <span class="favorite">❤</span>
+    <h3>Product A</h3>
+    <p>$20</p>
+    <div class="details">Extra details: 10% Off!</div>
+</div>
+
+<div class="product" data-stock="out" data-discount="false">
+    <span class="favorite">❤</span>
+    <h3>Product B</h3>
+    <p>$40</p>
+    <div class="details">Extra details: Limited edition.</div>
+</div>
+
+<div class="product" data-stock="in" data-discount="false">
+    <span class="favorite">❤</span>
+    <h3>Product C</h3>
+    <p>$15</p>
+    <div class="details">Extra details: Bestseller!</div>
+</div>
+
+<script>
+document.querySelectorAll(".product").forEach(product => {
+    product.addEventListener("click", function () {
+        this.classList.toggle("highlight");
+        if (this.dataset.stock === "out") {
+            alert("This product is out of stock!");
+        }
+    });
+    product.addEventListener("mouseenter", function () {
+        this.querySelector(".details").style.display = "block";
+    });
+    product.addEventListener("mouseleave", function () {
+        this.querySelector(".details").style.display = "none";
+    });
+    product.querySelector(".favorite").addEventListener("click", function (event) {
+        event.stopPropagation();
+        this.classList.toggle("selected");
+    });
+});
+</script>
+
+</body>
+</html>
