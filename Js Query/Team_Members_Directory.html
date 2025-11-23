@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Team Members Directory</title>
+
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+    <style>
+      body {
+        font-family: Arial, sans-serif;
+        padding: 20px;
+      }
+      .department {
+        margin: 20px 0;
+        padding: 15px;
+        border: 2px solid #333;
+        border-radius: 8px;
+        cursor: pointer;
+      }
+      .manager {
+        font-weight: bold;
+        margin-top: 10px;
+        cursor: pointer;
+        padding: 6px;
+        background: #eee;
+        border-radius: 5px;
+      }
+      .employee {
+        margin-left: 20px;
+        padding: 5px;
+        cursor: pointer;
+      }
+      .highlight {
+        background: yellow !important;
+      }
+      .contact {
+        display: none;
+        margin-left: 30px;
+        font-size: 14px;
+        color: #555;
+      }
+      .toggle-btn {
+        margin: 15px 0;
+        padding: 6px 12px;
+      }
+    </style>
+  </head>
+
+  <body>
+    <h2>Team Members Directory</h2>
+
+    <button id="randomBtn" class="toggle-btn">
+      Highlight Sibling Employees Randomly
+    </button>
+    <div class="department" data-dept="Sales">
+      <h3>Sales Department</h3>
+
+      <div class="manager">Raj (Manager)</div>
+      <div class="employee">Amit</div>
+      <div class="contact">Phone: 999-111-222</div>
+
+      <div class="employee">Rekha</div>
+      <div class="contact">Phone: 888-444-555</div>
+
+      <div class="employee">Tarun</div>
+      <div class="contact">Phone: 777-333-111</div>
+    </div>
+    <div class="department" data-dept="Tech">
+      <h3>Tech Department</h3>
+
+      <div class="manager">Priya (Manager)</div>
+      <div class="employee">Neha</div>
+      <div class="contact">Phone: 999-222-333</div>
+
+      <div class="employee">Karan</div>
+      <div class="contact">Phone: 888-555-666</div>
+
+      <div class="employee">Vikram</div>
+      <div class="contact">Phone: 777-444-222</div>
+    </div>
+
+    <script>
+      $(".manager").click(function () {
+        $(".employee").removeClass("highlight");
+        $(this).nextAll(".employee").addClass("highlight");
+      });
+      $(".employee").hover(
+        function () {
+          $(this).next(".contact").fadeIn();
+        },
+        function () {
+          $(this).next(".contact").fadeOut();
+        }
+      );
+      $(".department").click(function (e) {
+        if (
+          $(e.target).hasClass("manager") ||
+          $(e.target).hasClass("employee")
+        ) {
+          return;
+        }
+        $(this).children().css("background", "#dff0d8");
+      });
+      $("#randomBtn").click(function () {
+        $(".employee").removeClass("highlight");
+
+        let employees = $(".employee");
+        let random = employees.eq(Math.floor(Math.random() * employees.length));
+
+        random.siblings(".employee").addClass("highlight");
+      });
+      $(".manager").dblclick(function () {
+        let dept = $(this).parent();
+        dept.find(".employee, .contact").slideToggle();
+      });
+    </script>
+  </body>
+</html>
