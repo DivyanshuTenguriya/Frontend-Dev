@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Dynamic Blog Posts</title>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+    <style>
+      body {
+        font-family: Arial;
+        padding: 20px;
+      }
+      #posts {
+        margin-top: 20px;
+      }
+      .post {
+        padding: 12px;
+        margin: 10px 0;
+        background: #f5f5f5;
+        border-left: 4px solid #333;
+        border-radius: 6px;
+      }
+      .highlight {
+        background: #fff3a6 !important;
+      }
+      .tag {
+        display: inline-block;
+        padding: 4px 8px;
+        margin-right: 5px;
+        font-size: 12px;
+        background: #d1ecf1;
+        border-radius: 4px;
+        color: #0c5460;
+      }
+    </style>
+  </head>
+
+  <body>
+    <h2>Dynamic Blog Posts</h2>
+
+    <input type="text" id="newPostText" placeholder="Write post content..." />
+    <button id="addBtn">Add New Post</button>
+
+    <button id="prependBtn">Prepend Featured Post</button>
+    <button id="removeBtn">Remove Last Post</button>
+
+    <br /><br />
+
+    <input type="text" id="keyword" placeholder="Highlight keyword..." />
+    <button id="highlightBtn">Highlight</button>
+
+    <div id="posts">
+      <div class="post">JavaScript Tips and Tricks</div>
+      <div class="post">Learning CSS Flexbox and Grid</div>
+      <div class="post">Mastering React Components</div>
+    </div>
+
+    <script>
+      $("#addBtn").click(function () {
+        let text = $("#newPostText").val().trim();
+        if (text === "") return;
+
+        $("#posts").append(`<div class='post'>${text}</div>`);
+        $("#newPostText").val("");
+      });
+      $("#prependBtn").click(function () {
+        $("#posts").prepend(
+          `<div class='post'><strong>FEATURED:</strong> Latest Update in Web Development</div>`
+        );
+      });
+      $("#removeBtn").click(function () {
+        $("#posts .post").last().remove();
+      });
+      $("#posts").on("click", ".post", function () {
+        $(this).before(`<span class='tag'>#TagBefore</span>`);
+        $(this).after(`<span class='tag'>#TagAfter</span>`);
+      });
+      $("#highlightBtn").click(function () {
+        let key = $("#keyword").val().toLowerCase();
+
+        $(".post").each(function () {
+          $(this).removeClass("highlight");
+
+          if ($(this).text().toLowerCase().includes(key) && key !== "") {
+            $(this).addClass("highlight");
+          }
+        });
+      });
+    </script>
+  </body>
+</html>
