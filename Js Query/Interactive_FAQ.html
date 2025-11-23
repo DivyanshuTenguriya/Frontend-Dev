@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Interactive FAQ</title>
+
+<style>
+    body {
+        font-family: Arial, sans-serif;
+        padding: 20px;
+    }
+
+    .faq-item {
+        margin-bottom: 20px;
+        padding: 10px;
+        border: 1px solid #ccc;
+        border-radius: 8px;
+    }
+
+    .question {
+        font-weight: bold;
+        font-size: 18px;
+        cursor: pointer;
+        transition: color 0.3s;
+    }
+
+    .answer {
+        display: none;
+        margin-top: 10px;
+        padding-left: 15px;
+    }
+
+    .highlight {
+        background-color: #fffae6;
+    }
+</style>
+</head>
+
+<body>
+
+<h2>Interactive FAQ</h2>
+
+<div class="faq-item">
+    <p class="question">What is JavaScript?</p>
+    <div class="answer">
+        JavaScript is a scripting language used for web development.
+        <br><br>
+        <input type="text" placeholder="Your notes...">
+    </div>
+</div>
+
+<div class="faq-item">
+    <p class="question">What is DOM?</p>
+    <div class="answer">
+        DOM is Document Object Model that lets JS interact with the page structure.
+    </div>
+</div>
+
+<div class="faq-item">
+    <p class="question">What is Event Bubbling?</p>
+    <div class="answer">
+        Event bubbling means events propagate from child → parent.
+    </div>
+</div>
+
+<script>
+    const questions = document.querySelectorAll(".question");
+    const answers = document.querySelectorAll(".answer");
+    const inputs = document.querySelectorAll("input");
+    questions.forEach((q, index) => {
+        q.addEventListener("click", () => {
+            const ans = q.nextElementSibling;
+            ans.style.display = ans.style.display === "block" ? "none" : "block";
+        });
+    });
+    questions.forEach(q => {
+        q.addEventListener("mouseenter", () => {
+            q.style.color = "blue";
+        });
+        q.addEventListener("mouseleave", () => {
+            q.style.color = "black";
+        });
+    });
+    questions.forEach(q => {
+        q.addEventListener("dblclick", () => {
+            answers.forEach(a => (a.style.display = "none"));
+        });
+    });
+    inputs.forEach(inp => {
+        inp.addEventListener("focus", () => {
+            inp.closest(".faq-item").classList.add("highlight");
+        });
+        inp.addEventListener("blur", () => {
+            inp.closest(".faq-item").classList.remove("highlight");
+        });
+    });
+</script>
+
+</body>
+</html>
